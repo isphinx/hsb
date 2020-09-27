@@ -10,7 +10,7 @@ import MetalKit
 
 struct ContentView: View {
     @State var open = false
-    @State var modal = false
+
     @State var hueValue : Double = 88.0
     @State var satValue : Double = 1.0
     @State var briValue : Double = 0.0
@@ -25,8 +25,8 @@ struct ContentView: View {
         VStack {
             HStack {
                 Button(action: { self.open.toggle() }) {
-                    Text("HSB")
-                }.padding(.leading, 5.0)
+                    Image(systemName: "paintpalette")
+                }.padding()
                 .popover(isPresented: self.$open, arrowEdge: .bottom) {
                     VStack {
                         HStack {
@@ -62,11 +62,16 @@ struct ContentView: View {
                     }.frame(width:300)
                 }
                 Spacer()
-                Button(action: { self.modal.toggle()
+                Button(action: {
+                    self.hueValue = 88.0
+                    self.hueFilter.hue = Float(self.hueValue)
+                    self.satValue = 1.0
+                    self.satFilter.saturation = Float(self.satValue)
+                    self.briValue = 0.0
+                    self.briFilter.brightness = Float(self.briValue)
+                    picture.processImage()
                 }, label: {
-                    Text("modal")
-                }).sheet(isPresented: self.$modal, content: {
-                    Text("hello")
+                    Text("Reset").padding()
                 })
             }
             
